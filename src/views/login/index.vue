@@ -66,7 +66,7 @@ export default {
     login() {
       this.$refs.form.validate(isOk => {
         if (isOk) {
-          console.log('校验通过')
+          this.$store.dispatch('user/login', this.loginForm)
         }
       })
     }

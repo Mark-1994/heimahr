@@ -18,6 +18,8 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token
+    // 同步到缓存
+    setToken(token)
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -28,22 +30,10 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  login (context, data) {
+    console.log(data)
+    context.commit('SET_TOKEN', '123456')
   },
-
-  // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
@@ -89,7 +79,7 @@ const actions = {
 }
 
 export default {
-  namespaced: true,
+  namespaced: true, // 开启命名空间
   state,
   mutations,
   actions
